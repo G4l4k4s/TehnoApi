@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,18 +10,20 @@ namespace TechStoreApi.Models
     public class Customer
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("id")]
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(100)]
+        [Column("names")]
         public string Name { get; set; }
 
+        [Column("address")]
         public string Address { get; set; }
 
-        [Phone]
+        [Column("phone_number")]
         public string PhoneNumber { get; set; }
 
-        [EmailAddress]
+        [Column("emails")]
         public string Email { get; set; }
 
         // Navigation Property

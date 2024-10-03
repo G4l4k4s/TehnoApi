@@ -1,4 +1,23 @@
+using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
+using TechStoreApi.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+Env.Load();
+
+var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+var dbPort = Environment.GetEnvironmentVariable("DB_PORT");
+var dbDatabase = Environment.GetEnvironmentVariable("DB_DATABASE");
+var dbUser = Environment.GetEnvironmentVariable("DB_USERNAME");
+var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+// var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET");
+var conectionDB = $"server={dbHost};port={dbPort};database={dbDatabase};user={dbUser};password={dbPassword}";
+
+
+
+builder.Services.AddDbContext<MyDbContext>(options =>
+    options.UseMySql(conectionDB, ServerVersion.Parse("8.0.20-mysql")));
 
 // Add services to the container.
 
