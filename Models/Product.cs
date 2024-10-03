@@ -36,12 +36,12 @@ namespace TechStoreApi.Models
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
 
-        public Product(string name, string description, decimal price, int quantityininventory)
+        public Product(string name, string description, decimal price, int quantityInInventory)
         {
             Name = name.ToLower().Trim();
             Description = description.ToLower().Trim();
             Price = price;
-            QuantityInInventory = quantityininventory;
+            QuantityInInventory = quantityInInventory;
         }
 
     }

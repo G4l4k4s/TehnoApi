@@ -27,11 +27,11 @@ namespace TechStoreApi.Models
         [Column("role")]
         public string Role { get; set; } // e.g., Administrator, Employee
 
-        public User(string username, byte[] passwordhash, byte[] passwordsalt)
+        public User(string userName, byte[] passwordHash, byte[] passwordSalt)
         {
-            UserName = username.ToLower().Trim();
-            PasswordHash = passwordhash;
-            PasswordSalt = passwordsalt;
+            UserName = userName.ToLower().Trim();
+            PasswordHash = passwordHash;
+            PasswordSalt = passwordSalt;
         }
     }
 }

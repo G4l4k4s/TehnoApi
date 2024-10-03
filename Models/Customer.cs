@@ -30,11 +30,11 @@ namespace TechStoreApi.Models
         // Navigation Property
         public ICollection<Order> Orders { get; set; }
 
-        public Customer(string name, string address, string phonenumber, string email)
+        public Customer(string name, string address, string phoneNumber, string email)
         {
             Name = name.ToLower().Trim();
             Address = address.ToLower().Trim();
-            PhoneNumber = phonenumber.ToLower().Trim();
+            PhoneNumber = phoneNumber.ToLower().Trim();
             Email = email.ToLower().Trim();
         }
     }
