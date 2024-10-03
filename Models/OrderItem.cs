@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace TechStoreApi.Models
 {
+    [Table("order_by_item")]
     public class OrderItem
     {
         [Key]
@@ -15,7 +16,7 @@ namespace TechStoreApi.Models
         [Column("id")]
         public int Id { get; set; }
 
-        [Column("quantits")]
+        [Column("quantitys")]
         public int Quantity { get; set; }
 
         // Foreign Keys

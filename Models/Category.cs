@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TechStoreApi.Models
 {
-    [Table("customers")]
+    [Table("categorys")]
     public class Category
     {
         [Key]

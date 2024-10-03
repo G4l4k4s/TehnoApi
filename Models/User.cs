@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace TechStoreApi.Models
 {
+    [Table("users")]
     public class User
     {
         [Key]

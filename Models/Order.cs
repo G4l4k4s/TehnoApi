@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TechStoreApi.Models
 {
-    [Table("prders")]
+    [Table("orders")]
     public class Order
     {
         [Key]
