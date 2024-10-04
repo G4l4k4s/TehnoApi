@@ -18,29 +18,35 @@ namespace TechStoreApi.Services
             _context = context;
         }
 
-        public Task<OrderItem> AddOrderItemAsync(OrderItem orderItem)
+        public async Task Add(OrderItem orderItem)
         {
-            throw new NotImplementedException();
+            await _context.OrderItems.AddAsync(orderItem);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteOrderItemAsync(int id)
+        public async Task<bool> CheckExistence(int id)
         {
-            throw new NotImplementedException();
+            return await _context.OrderItems.AnyAsync(x => x.Id == id);
         }
 
-        public Task<OrderItem> GetOrderItemByIdAsync(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var orderItem = await GetById(id);
+            if (orderItem != null)
+            {
+                _context.OrderItems.Remove(orderItem);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task<List<OrderItem>> GetOrderItemsAsync()
+        public async Task<IEnumerable<OrderItem>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.OrderItems.ToListAsync();
         }
 
-        public Task<OrderItem> UpdateOrderItemAsync(OrderItem orderItem)
+        public async Task<OrderItem?> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.OrderItems.FindAsync(id);
         }
     }
 }

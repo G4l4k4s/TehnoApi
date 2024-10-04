@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TechStoreApi.Data;
 using TechStoreApi.Models;
 using TechStoreApi.Repository;
@@ -18,29 +19,35 @@ namespace TechStoreApi.Services
             _context = context;
         }
 
-        public Task<Product> AddProductAsync(Product product)
+        public async Task Add(Product product)
         {
-            throw new NotImplementedException();
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteProductAsync(int id)
+        public async Task<bool> CheckExistence(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Products.AnyAsync(p => p.Id == id);
         }
 
-        public Task<IEnumerable<Product>> GetAllProductsAsync()
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var product = await GetById(id);
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task<Product> GetProductByIdAsync(int id)
+        public async Task<IEnumerable<Product>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Products.ToListAsync();
         }
 
-        public Task<Product> UpdateProductAsync(Product product)
+        public async Task<Product?> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Products.FindAsync(id);
         }
     }
 }

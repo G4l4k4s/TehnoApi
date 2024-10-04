@@ -19,43 +19,35 @@ namespace TechStoreApi.Services
             _context = context;
         }
 
-        public async Task<Category> AddCategoryAsync(Category category)
+        public async Task Add(Category category)
         {
-            _context.Categorys.Add(category);
-            await _context.SaveChangesAsync();
-            return category;
+            await _context.Categorys.AddAsync(category);
+            await _context.SaveChangesAsync();            
         }
 
-        public async Task DeleteCategoryAsync(int id)
+        public async Task<bool> CheckExistence(int id)
         {
-            var DelCategory = await GetCategoryByIdAsync(id);
-            if (DelCategory != null)
+            return await _context.Categorys.AnyAsync(c => c.Id == id);
+        }
+
+        public async Task Delete(int id)
+        {
+            var category = await GetById(id);
+            if (category != null)
             {
-                _context.Categorys.Remove(DelCategory);
-                await _context.SaveChangesAsync();   
+                _context.Categorys.Remove(category);
+                await _context.SaveChangesAsync();
             }
         }
 
-        public async Task<List<Category>> GetAllCategoriesAsync()
+        public async Task<IEnumerable<Category>> GetAll()
         {
             return await _context.Categorys.ToListAsync();
         }
 
-        public async Task<Category> GetCategoryByIdAsync(int id)
+        public async Task<Category?> GetById(int id)
         {
-           return await _context.Categorys.FirstOrDefaultAsync(c => c.Id == id);
-        }
-
-        public async Task<Category> UpdateCategoryAsync(Category category)
-        {
-            var FindCategory =  await GetCategoryByIdAsync(category.Id);
-            if (FindCategory != null)
-            {
-                _context.Entry(FindCategory).CurrentValues.SetValues(category);
-                await _context.SaveChangesAsync();
-            }
-            return category;
-
+            return await _context.Categorys.FindAsync(id);
         }
     }
 }

@@ -2,15 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TechStoreApi.Models;
 
 namespace TechStoreApi.Repository
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Models.Product>> GetAllProductsAsync();
-        Task<Models.Product> GetProductByIdAsync(int id);
-        Task<Models.Product> AddProductAsync(Models.Product product);   
-        Task<Models.Product> UpdateProductAsync(Models.Product product);
-        Task DeleteProductAsync(int id);       
+        Task<IEnumerable<Product>> GetAll();
+        Task<Product?> GetById(int id);
+        Task Add(Product product);
+        Task Delete(int id);
+        Task<bool> CheckExistence(int id);
     }
 }

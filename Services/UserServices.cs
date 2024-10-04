@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TechStoreApi.Data;
 using TechStoreApi.Models;
 using TechStoreApi.Repository;
@@ -17,31 +18,36 @@ namespace TechStoreApi.Services
         {
             _context = context;
         }
-        //Fin del llamado del DbContext
 
-        public Task<User> CreateUserAsync(User user)
+        public async Task Add(User user)
         {
-            throw new NotImplementedException();
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteUserAsync(int id)
+        public async Task<bool> CheckExistence(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Users.AnyAsync(u => u.Id == id);
         }
 
-        public Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var user = await GetById(id);
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task<User> GetUserByIdAsync(int id)
+        public async Task<IEnumerable<User>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Users.ToListAsync();
         }
 
-        public Task<User> UpdateUserAsync(User user)
+        public async Task<User?> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Users.FindAsync(id);
         }
     }
 }

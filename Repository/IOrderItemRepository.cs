@@ -8,13 +8,10 @@ namespace TechStoreApi.Repository
 {
     public interface IOrderItemRepository
     {
-        // CRUD operations for OrderItem entity
-        Task<List<OrderItem>> GetOrderItemsAsync();
-        Task<OrderItem> GetOrderItemByIdAsync(int id);
-        Task<OrderItem> AddOrderItemAsync(OrderItem orderItem);
-        Task<OrderItem> UpdateOrderItemAsync(OrderItem orderItem);
-        Task DeleteOrderItemAsync(int id);
-        
-        
+        Task<IEnumerable<OrderItem>> GetAll();
+        Task<OrderItem?> GetById(int id);
+        Task Add(OrderItem orderItem);
+        Task Delete(int id);
+        Task<bool> CheckExistence(int id); 
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TechStoreApi.Data;
 using TechStoreApi.Models;
 using TechStoreApi.Repository;
@@ -18,29 +19,35 @@ namespace TechStoreApi.Services
             _context = context;
         }
 
-        public Task AddCustomerAsync(Customer customer)
+        public async Task Add(Customer customer)
         {
-            throw new NotImplementedException();
+            await _context.Customers.AddAsync(customer);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteCustomerAsync(int id)
+        public async Task<bool> CheckExistence(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Customers.AnyAsync(c => c.Id == id);
         }
 
-        public Task<IEnumerable<Customer>> GetAllCustomersAsync()
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var customer = await _context.Customers.FindAsync(id);
+            if (customer != null)
+            {
+                _context.Customers.Remove(customer);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task<Customer> GetCustomerByIdAsync(int id)
+        public async Task<IEnumerable<Customer>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Customers.ToListAsync();
         }
 
-        public Task UpdateCustomerAsync(Customer customer)
+        public async Task<Customer?> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Customers.FindAsync(id);
         }
     }
 }

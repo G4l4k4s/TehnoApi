@@ -8,15 +8,10 @@ namespace TechStoreApi.Repository
 {
     public interface IOrderRepository
     {
-        Task<List<Order>> GetAllOrders();
-        Task<Order> GetOrderById(int id);
-        Task<Order> AddOrder(Order order);
-        Task<Order> UpdateOrder(Order order);
-        Task DeleteOrder(int id);
-        Task<Order> GetOrderWithDetails(int id);
-        Task<Order> GetOrderWithItems(int id);
-        Task<Order> GetOrderWithCustomer(int id);
-        Task<Order> GetOrderWithItemsAndCustomer(int id);
-        Task<Order> GetOrderByCustomer(int customerId);       
+        Task<IEnumerable<Order>> GetAll();
+        Task<Order?> GetById(int id);
+        Task Add(Order order);
+        Task Delete(int id);
+        Task<bool> CheckExistence(int id);
     }
 }

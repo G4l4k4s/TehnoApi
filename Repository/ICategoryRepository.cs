@@ -8,10 +8,10 @@ namespace TechStoreApi.Repository
 {
     public interface ICategoryRepository
     {
-        Task<List<Category>> GetAllCategoriesAsync();
-        Task<Category> GetCategoryByIdAsync(int id);
-        Task<Category> AddCategoryAsync(Category category);
-        Task<Category> UpdateCategoryAsync(Category category);
-        Task DeleteCategoryAsync(int id);
+        Task<IEnumerable<Category>> GetAll();
+        Task<Category?> GetById(int id);
+        Task Add(Category category);
+        Task Delete(int id);
+        Task<bool> CheckExistence(int id);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TechStoreApi.Data;
 using TechStoreApi.Models;
 using TechStoreApi.Repository;
@@ -18,54 +19,35 @@ namespace TechStoreApi.Services
             _context = context;
         }
 
-        public Task<Order> AddOrder(Order order)
+        public async Task Add(Order order)
         {
-            throw new NotImplementedException();
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteOrder(int id)
+        public async Task<bool> CheckExistence(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Orders.AnyAsync(o => o.Id == id);
         }
 
-        public Task<List<Order>> GetAllOrders()
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var order = await GetById(id);
+            if (order != null)
+            {
+                _context.Orders.Remove(order);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task<Order> GetOrderByCustomer(int customerId)
+        public async Task<IEnumerable<Order>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Orders.ToListAsync();
         }
 
-        public Task<Order> GetOrderById(int id)
+        public async Task<Order?> GetById(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Order> GetOrderWithCustomer(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Order> GetOrderWithDetails(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Order> GetOrderWithItems(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Order> GetOrderWithItemsAndCustomer(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Order> UpdateOrder(Order order)
-        {
-            throw new NotImplementedException();
+            return await _context.Orders.FindAsync(id);
         }
     }
 }
